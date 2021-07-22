@@ -10,20 +10,22 @@ import UIKit
 
 class SecondViewController: UIViewController {
     
-    var delegate: SelectionProtocol?
+    var sportsChannel: ChannelVM!
+    var carsChannel: ChannelVM!
+    var cultureChannel: ChannelVM!
+    var cultureAndSportsChannel: ChannelVM!
+    
+    weak var delegate: SelectionProtocol?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    var sportsChannel: ChannelVM = ChannelVM(nil, ChannelType.sports)
-    var carsChannel: ChannelVM = ChannelVM(nil, ChannelType.cars)
-    var cultureChannel: ChannelVM = ChannelVM(nil, ChannelType.culture)
-    var cultureAndSportsChannel: ChannelVM = ChannelVM(nil, ChannelType.combined)
     let dispatchGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initChannels()
         setup()
     }
     
@@ -35,6 +37,13 @@ class SecondViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         cancelSchedualedTask()
+    }
+    
+    private func initChannels() {
+         sportsChannel = ChannelVM(nil, ChannelType.sports, self)
+         carsChannel = ChannelVM(nil, ChannelType.cars, self)
+         cultureChannel = ChannelVM(nil, ChannelType.culture, self)
+         cultureAndSportsChannel = ChannelVM(nil, ChannelType.combined, nil)
     }
     
     private func setSchedualedTask() {
@@ -128,7 +137,7 @@ extension SecondViewController: UITableViewDataSource {
     private func populateSportsAndCultureItems() {
         if let sportsItems = sportsChannel.items, let cultureItems = cultureChannel.items {
             let cultureAndSportsItems = sportsItems + cultureItems
-            self.cultureAndSportsChannel = ChannelVM(cultureAndSportsItems, ChannelType.combined)
+            self.cultureAndSportsChannel = ChannelVM(cultureAndSportsItems, ChannelType.combined, nil)
         }
     }
     
@@ -161,6 +170,9 @@ extension SecondViewController: UITableViewDataSource {
         let data = ShouldPresentCarsTable() ? self.carsChannel: self.cultureAndSportsChannel
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HeadlineCell.identifier, for: indexPath) as? HeadlineCell else {
             fatalError("Could not find cell")
+        }
+        guard let data = data else {
+            fatalError("no data")
         }
         cell.titleLabel.text = data.getTitle(for: indexPath.row)
         cell.articleDescription = data.getDescription(for: indexPath.row)
@@ -197,13 +209,35 @@ extension SecondViewController: UITableViewDataSource {
     }
 }
 
+extension SecondViewController: UpdateLoadingIndicatorProtocol {
+    func handleUpdateStarted() {
+        startAnimating()
+    }
+
+    func handleUpdateFinished() {
+        stopAnimating()
+    }
+
+
+}
+
 //MARK: - handle activity indicator
 extension SecondViewController {
     private func startAnimating() {
-        self.loadingIndicator.isHidden = !ChannelVM.shouldStartAnimating()
+        DispatchQueue.main.async { [weak self] in
+            if ChannelVM.shouldStartAnimating() {
+                self?.loadingIndicator.startAnimating()
+            }
+            self?.loadingIndicator.isHidden = !ChannelVM.shouldStartAnimating()
+        }
     }
     
     private func stopAnimating() {
-        self.loadingIndicator.isHidden = ChannelVM.shouldStopAnimating()
+        DispatchQueue.main.async { [weak self] in
+            if ChannelVM.shouldStartAnimating() {
+                self?.loadingIndicator.startAnimating()
+            }
+            self?.loadingIndicator.isHidden = ChannelVM.shouldStopAnimating()
+        }
     }
 }

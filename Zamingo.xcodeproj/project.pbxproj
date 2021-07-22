@@ -25,6 +25,8 @@
 		23A1DED026A758AE00DA4453 /* HeadlineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23A1DECF26A758AE00DA4453 /* HeadlineCell.xib */; };
 		23A1DED226A7EC5000DA4453 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A1DED126A7EC5000DA4453 /* ThirdViewController.swift */; };
 		23A1DED426A88E1200DA4453 /* ChannelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A1DED326A88E1100DA4453 /* ChannelType.swift */; };
+		23A1DED726A992B300DA4453 /* UpdateLoadingIndicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A1DED626A992B300DA4453 /* UpdateLoadingIndicatorProtocol.swift */; };
+		23A1DED926A992CF00DA4453 /* SelectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A1DED826A992CF00DA4453 /* SelectionProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		23A1DECF26A758AE00DA4453 /* HeadlineCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeadlineCell.xib; sourceTree = "<group>"; };
 		23A1DED126A7EC5000DA4453 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		23A1DED326A88E1100DA4453 /* ChannelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelType.swift; sourceTree = "<group>"; };
+		23A1DED626A992B300DA4453 /* UpdateLoadingIndicatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateLoadingIndicatorProtocol.swift; sourceTree = "<group>"; };
+		23A1DED826A992CF00DA4453 /* SelectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 		23A1DEA026A6DD1E00DA4453 /* Zamingo */ = {
 			isa = PBXGroup;
 			children = (
+				23A1DED526A9925800DA4453 /* Protocols */,
 				23A1DECC26A7585800DA4453 /* Views */,
 				23A1DEC526A6E8FA00DA4453 /* Service */,
 				23A1DEBD26A6E5E300DA4453 /* Resources */,
@@ -149,6 +154,15 @@
 				23A1DECF26A758AE00DA4453 /* HeadlineCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		23A1DED526A9925800DA4453 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				23A1DED626A992B300DA4453 /* UpdateLoadingIndicatorProtocol.swift */,
+				23A1DED826A992CF00DA4453 /* SelectionProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,7 +242,9 @@
 				23A1DEA626A6DD1E00DA4453 /* ViewController.swift in Sources */,
 				23A1DEA226A6DD1E00DA4453 /* AppDelegate.swift in Sources */,
 				23A1DED226A7EC5000DA4453 /* ThirdViewController.swift in Sources */,
+				23A1DED726A992B300DA4453 /* UpdateLoadingIndicatorProtocol.swift in Sources */,
 				23A1DEBA26A6DD7300DA4453 /* FirstViewController.swift in Sources */,
+				23A1DED926A992CF00DA4453 /* SelectionProtocol.swift in Sources */,
 				23A1DED426A88E1200DA4453 /* ChannelType.swift in Sources */,
 				23A1DEBC26A6E1C400DA4453 /* SecondViewController.swift in Sources */,
 				23A1DECE26A7588000DA4453 /* HeadlineCell.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 
 class ChannelVM {
     let type: ChannelType
+    weak var delegate: UpdateLoadingIndicatorProtocol?
     private static var TimerCounter = 0
     private static let concurrentQueue = DispatchQueue(label: "Concurrent Queue", attributes: .concurrent)
     var items:[Item]?
@@ -43,7 +44,7 @@ class ChannelVM {
     }
     
     private func increaseCounter() {
-        ChannelVM.concurrentQueue.async(flags: .barrier) {
+        ChannelVM.concurrentQueue.sync(flags: .barrier) {
             ChannelVM.TimerCounter += 1
             if !(0 ..< 4).contains(ChannelVM.TimerCounter) {
                 print("     TimerCounter Sync error ")
@@ -69,13 +70,15 @@ class ChannelVM {
     }
     
     @objc private func update() {
-        self.updateItems { items, error in
-        
+        delegate?.handleUpdateStarted()
+        self.updateItems { [weak self] items, error in
+            self?.delegate?.handleUpdateFinished()
         }
     }
     
-    init(_ items:[Item]?, _ type: ChannelType) {
+    init(_ items:[Item]?, _ type: ChannelType, _ delegate: UpdateLoadingIndicatorProtocol?) {
         self.type = type
+        self.delegate = delegate
         if let items = items {
             self.items = items
         }

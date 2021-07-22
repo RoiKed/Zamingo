@@ -8,10 +8,6 @@
 import Foundation
 import UIKit
 
-protocol SelectionProtocol {
-    func updateSelection(_ title: String)
-}
-
 class FirstViewController: UIViewController {
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var dateLabel: UILabel!
